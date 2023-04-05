@@ -1,24 +1,22 @@
 # Retrieves service list from ip-ranges.json to facilitate filtering CIDRs via get-regional-ranges.py
 
 import json
-import urllib.request as request
 
-def get_service_list(url):
 
-   response = request.urlopen(url)
+def get_service_list(ip_ranges_file):
 
-   data = json.loads(response.read())
+    response = open(ip_ranges_file)
 
-   raw_list = [
-      cidr for cidr in data["prefixes"]
-   ]
+    data = json.load(response)
 
-   service_list = []
-   for item in raw_list:
-      service = item['service']
-      if service not in service_list:
-         service_list.append(item['service'])
+    raw_list = [cidr for cidr in data["prefixes"]]
 
-   sorted_list = sorted(set(service_list))
+    service_list = []
+    for item in raw_list:
+        service = item["service"]
+        if service not in service_list:
+            service_list.append(item["service"])
 
-   return sorted_list
+    sorted_list = sorted(set(service_list))
+
+    return sorted_list
