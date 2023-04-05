@@ -6,7 +6,7 @@ import json
 def get_region_list(ip_ranges_file):
     response = open(ip_ranges_file)
 
-    data = json.loads(response)
+    data = json.load(response)
 
     raw_list = [cidr for cidr in data["prefixes"]]
 
